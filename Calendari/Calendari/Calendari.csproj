@@ -38,7 +38,7 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Phidgets\Phidget21.NET.dll</HintPath>
     </Reference>
     <Reference Include="PhidgetInteraction">
-      <HintPath>..\..\..\..\..\Source\Workspaces\PhidgetInteraction\PhidgetInteraction\bin\Debug\PhidgetInteraction.dll</HintPath>
+      <HintPath>..\..\..\..\..\Source\Repos\PhidetIntegration\PhidgetInteraction\bin\Debug\PhidgetInteraction.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -2,7 +2,6 @@
 using PhidgetInteraction;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Timer = System.Threading.Timer;
 
 namespace Calendari
 {
@@ -11,10 +10,7 @@ namespace Calendari
         DateTime mc;
         long timePressed = 0;
         bool isPressed = false;
-        InterPhi phi;
-        Timer timer1;
-
-        delegate void SetTextCallback(string txt);
+        InterPhi phi;       
 
         public Calendari()
         {
@@ -29,8 +25,7 @@ namespace Calendari
             phi.AddSensor(new Sensor("2", "SPACE", 500));
 
             phi.StartPhidget();
-       
-            timer1 = new System.Threading.Timer(CheckPhidgets, null, 0, 250);
+            timer2.Start();
         }
 
         private void Calendari_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -38,45 +33,59 @@ namespace Calendari
             switch (e.KeyData)
             {
                 case Keys.A:
-                    mc = mc.AddDays(-7);
-                    GetSetmanaActual();
+                    MoveDays(-7);
                     break;
                 case Keys.D:
-                    mc = mc.AddDays(7);
-                    GetSetmanaActual();
+                    MoveDays(7);
                     break;
                 case Keys.Space:
-                    if (!isPressed)
-                    {
-                        timePressed = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                        isPressed = true;
-                    }                        
+                    SpaceControl(true);   
                     break;
             }
         }
 
-        private void GetSetmanaActual()
+        private void MoveDays(int days)
         {
-            DateTime monday = mc.AddDays(((int)mc.DayOfWeek - 1));
+            mc = mc.AddDays(days);
+            GetSetmanaActual();
+        }
+
+        private void SpaceControl(bool isDown)
+        {
+            if (isDown)
+            {
+                if (!isPressed)
+                {
+                    timePressed = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    isPressed = true;
+                }
+            }
+            else
+            {
+                long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                if (timeNow - timePressed > 2000)
+                {
+                    mc = DateTime.Now;
+                    GetSetmanaActual();
+                }
+                else
+                {
+                    new Arkanoid().Show();
+                }
+                isPressed = false;
+            }
+        }
+        private void GetSetmanaActual()
+        {            
+            DateTime monday = mc.AddDays(-((int)mc.DayOfWeek - 1));
             DateTime sunday = monday.AddDays(6);
             SetText(string.Format("Setmana del {0} de {1} de {2} al {3} de {4} de {5}",
                 monday.Day, GetMonth(monday.Month), monday.Year, sunday.Day, GetMonth(sunday.Month), sunday.Year), Setmana);
         }
 
         private void SetText(string text, TextBox tb)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (tb.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(SetText);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                tb.Text = text;
-            }
+        {                       
+            tb.Text = text;
         }
 
 
@@ -118,21 +127,11 @@ namespace Calendari
         {
             if (e.KeyData == Keys.Space)
             {
-                long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;                
-                if (timeNow - timePressed > 2000)
-                {
-                    mc = DateTime.Now;
-                    GetSetmanaActual();
-                }
-                else
-                {
-                    new Arkanoid().Show();
-                }
-                isPressed = false;
+                SpaceControl(false);
             }
         }
 
-        private void CheckPhidgets(object o)
+        private void CheckPhidgets()
         {
             List<Sensor> sensors = phi.GetKeys();
 
@@ -143,20 +142,25 @@ namespace Calendari
             
             if (phi.GetValue("A"))
             {
-                Calendari_KeyDown(this, new KeyEventArgs(Keys.A));
+                MoveDays(-7);
             }
             else if (phi.GetValue("D"))
             {
-                Calendari_KeyDown(this, new KeyEventArgs(Keys.D));
+                MoveDays(7);
             }
-            else if (phi.GetValue("SPACE"))
+            /*else if (phi.GetValue("SPACE"))
             {
-                Calendari_KeyDown(this, new KeyEventArgs(Keys.Space));
+                SpaceControl(true);
             }
             else if (!phi.GetValue("SPACE") && isPressed)
             {
-                Calendari_KeyUp(this, new KeyEventArgs(Keys.Space));
-            }
+                SpaceControl(false);
+            }*/
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            CheckPhidgets();
         }
     }
 }

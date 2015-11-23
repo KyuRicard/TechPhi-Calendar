@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhidgetInteraction;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace Calendari
     {
         long timePressed = 0;
         bool isPressed = false;
+        private InterPhi phi;
         public Arkanoid()
         {
             InitializeComponent();
@@ -21,7 +23,14 @@ namespace Calendari
 
         private void Arkanoid_Load(object sender, EventArgs e)
         {
+            phi = new InterPhi();
 
+            phi.AddSensor(new Sensor("0", "A", 850));
+            phi.AddSensor(new Sensor("1", "D", 850));
+            phi.AddSensor(new Sensor("2", "SPACE", 500));
+
+            phi.StartPhidget();
+            timer1.Start();
         }
 
         private void Arkanoid_KeyDown(object sender, KeyEventArgs e)
@@ -29,20 +38,55 @@ namespace Calendari
             switch (e.KeyData)
             {
                 case Keys.A:
-                    if (Plataforma.Location.X > 0)
-                        Plataforma.Location = new Point(Plataforma.Location.X - 10, 610);
+                    MoveLeft();
                     break;
                 case Keys.D:
-                    if (Plataforma.Location.X + Plataforma.Width < Width)
-                        Plataforma.Location = new Point(Plataforma.Location.X + 10, 610);
+                    MoveRight();
                     break;
                 case Keys.Space:
-                    if (!isPressed)
-                    {
-                        timePressed = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                        isPressed = true;
-                    }                      
+                    PressSpace(true);
                     break;
+            }
+        }
+
+        private void MoveLeft()
+        {
+            if (Plataforma.Location.X > 0)
+            {
+                Plataforma.Location = new Point(Plataforma.Location.X - 10, 610);
+            }
+               
+        }
+
+        private void PressSpace(bool down)
+        {
+            if (down)
+            {
+                if (!isPressed)
+                {
+                    timePressed = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    isPressed = true;
+                }
+            }           
+            else
+            {
+                long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                if (timeNow - timePressed > 2000)
+                {
+                    Close();
+                }
+                else
+                {
+
+                }
+            }
+        }
+
+        private void MoveRight()
+        {
+            if (Plataforma.Location.X + Plataforma.Width < Width)
+            {
+                Plataforma.Location = new Point(Plataforma.Location.X + 10, 610);
             }
         }
 
@@ -50,16 +94,35 @@ namespace Calendari
         {
             if (e.KeyData == Keys.Space)
             {
-                long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-                if (timeNow - timePressed > 2000)
-                {
-                    Close();
-                }        
-                else
-                {
-
-                }        
+                PressSpace(false);
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            List<Sensor> sensors = phi.GetKeys();
+
+            foreach (Sensor s in sensors)
+            {
+                Console.WriteLine("Sensor {0} Value {1}", s.Value, s.Activated);
+            }
+
+            if (phi.GetValue("A"))
+            {
+                MoveLeft();
+            }
+            else if (phi.GetValue("D"))
+            {
+                MoveRight();
+            }
+            /*else if (phi.GetValue("SPACE"))
+            {
+                PressSpace(true);
+            }
+            else if (!phi.GetValue("SPACE") && isPressed)
+            {
+                PressSpace(false);
+            }*/
         }
     }
 }

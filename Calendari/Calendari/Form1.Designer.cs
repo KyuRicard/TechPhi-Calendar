@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.Setmana = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // Setmana
@@ -43,21 +43,16 @@
             this.Setmana.TabIndex = 0;
             this.Setmana.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label1
+            // timer2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(211, 326);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
+            this.timer2.Interval = 25;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Calendari
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(515, 509);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.Setmana);
             this.Name = "Calendari";
             this.Text = "Prototip del calendari";
@@ -71,7 +66,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox Setmana;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

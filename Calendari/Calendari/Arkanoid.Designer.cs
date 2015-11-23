@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Plataforma = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // Plataforma
@@ -39,6 +41,11 @@
             this.Plataforma.Size = new System.Drawing.Size(89, 13);
             this.Plataforma.TabIndex = 0;
             this.Plataforma.Text = "Soc la plataforma";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 25;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Arkanoid
             // 
@@ -59,5 +66,6 @@
         #endregion
 
         private System.Windows.Forms.Label Plataforma;
+        private System.Windows.Forms.Timer timer1;
     }
 }
