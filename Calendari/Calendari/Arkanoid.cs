@@ -1,12 +1,5 @@
-﻿using PhidgetInteraction;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calendari
@@ -15,22 +8,15 @@ namespace Calendari
     {
         long timePressed = 0;
         bool isPressed = false;
-        private InterPhi phi;
         public Arkanoid()
         {
             InitializeComponent();
+            timer1.Start();
         }
 
         private void Arkanoid_Load(object sender, EventArgs e)
         {
-            phi = new InterPhi();
-
-            phi.AddSensor(new Sensor("0", "A", 850));
-            phi.AddSensor(new Sensor("1", "D", 850));
-            phi.AddSensor(new Sensor("2", "SPACE", 500));
-
-            phi.StartPhidget();
-            timer1.Start();
+            
         }
 
         private void Arkanoid_KeyDown(object sender, KeyEventArgs e)
@@ -73,6 +59,7 @@ namespace Calendari
                 long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
                 if (timeNow - timePressed > 2000)
                 {
+                    //Calendari.StartTimer();
                     Close();
                 }
                 else
@@ -99,30 +86,25 @@ namespace Calendari
         }
 
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            List<Sensor> sensors = phi.GetKeys();
+        {        
 
-            foreach (Sensor s in sensors)
-            {
-                Console.WriteLine("Sensor {0} Value {1}", s.Value, s.Activated);
-            }
-
-            if (phi.GetValue("A"))
+            if (Input.GetInput("A"))
             {
                 MoveLeft();
             }
-            else if (phi.GetValue("D"))
+            else if (Input.GetInput("D"))
             {
                 MoveRight();
             }
-            /*else if (phi.GetValue("SPACE"))
+            else if (Input.GetInput("SPACE"))
             {
                 PressSpace(true);
             }
-            else if (!phi.GetValue("SPACE") && isPressed)
+            else if (!Input.GetInput("SPACE") && isPressed)
             {
                 PressSpace(false);
-            }*/
+            }
         }
+
     }
 }
