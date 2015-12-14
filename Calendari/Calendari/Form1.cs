@@ -32,10 +32,19 @@ namespace Calendari
             tableLayoutPanel1.Width = panel1.Width;
             tableLayoutPanel1.Height = panel1.Height;
 
+            Setmana.Width = panel1.Width;
+
             label1.Location = new Point(0, Height - label1.Height);
+
+            Dilluns.Anchor = AnchorStyles.None;
+            Dimarts.Anchor = AnchorStyles.None;
+            Dimecres.Anchor = AnchorStyles.None;
+            Dijous.Anchor = AnchorStyles.None;
+            Divendres.Anchor = AnchorStyles.None;
+            Dissabte.Anchor = AnchorStyles.None;
         }
 
-        private void Calendari_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void Calendari_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyData)
             {
@@ -159,6 +168,13 @@ namespace Calendari
             DateTime sunday = monday.AddDays(6);
             SetText(string.Format("Setmana del {0} de {1} de {2} al {3} de {4} de {5}",
                 monday.Day, GetMonth(monday.Month), monday.Year, sunday.Day, GetMonth(sunday.Month), sunday.Year), Setmana);
+            Dilluns.Text = "Dilluns " + monday.Day;
+            Dimarts.Text = "Dimarts " + monday.AddDays(1).Day;
+            Dimecres.Text = "Dimecres " + monday.AddDays(2).Day;
+            Dijous.Text = "Dijous " + monday.AddDays(3).Day;
+            Divendres.Text = "Divendres " + monday.AddDays(4).Day;
+            Dissabte.Text = "Dissabte " + monday.AddDays(5).Day;
+
         }
 
         private void SetText(string text, TextBox tb)
