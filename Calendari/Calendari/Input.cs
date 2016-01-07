@@ -42,7 +42,7 @@ namespace Calendari
 
         public static bool GetState()
         {
-            return phi.GetState();
+            return /*phi.GetState();*/false;
         }
     }
 }

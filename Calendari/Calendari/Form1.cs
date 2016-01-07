@@ -7,6 +7,7 @@ namespace Calendari
     public partial class Calendari : Form
     {
         DateTime mc;
+        DateTime hora;
         long timePressed = 0;
         bool isPressed = false;
         bool A = false, D = false;
@@ -14,8 +15,34 @@ namespace Calendari
 
         public Calendari()
         {
+            Clase c1 = new Clase
+            {
+                Name = "test",
+                Professor = "test",
+                Repeat = 1,
+                Date = new Date { Day = 1, Month = 1, Year = 1 },
+                Start = new Time { Hour = 10, Minute = 00 },
+                Finish = new Time { Hour = 13, Minute = 00 }
+            };
+
+            Clase c2 = new Clase
+            {
+                Name = "test2",
+                Professor = "test2",
+                Repeat = -1,
+                Date = new Date { Day = 2, Month = 5, Year = 1999 },
+                Start = new Time { Hour = 10, Minute = 00 },
+                Finish = new Time { Hour = 13, Minute = 00 }
+            };
+
+            Parser.AddClase(c1);
+            Parser.AddClase(c2);
+            Parser.WriteXML("test.xml");
+
             InitializeComponent();
             mc = DateTime.Now;
+            hora = DateTime.Now;
+
             GetSetmanaActual();
             Input.StartInput();
             timer2.Start();
@@ -23,15 +50,17 @@ namespace Calendari
             WindowState = FormWindowState.Maximized;
             Location = Screen.PrimaryScreen.WorkingArea.Location;
             Size = Screen.PrimaryScreen.WorkingArea.Size;
-            Height = 900;
-            panel1.Width = Width - 5;
+            Height = 1080;
+            panel1.Width = Width;
             panel1.Height = Height - 5;
 
             panel2.Width = Width;
             panel2.Height = Height;
 
-            tableLayoutPanel1.Width = panel1.Width;
-            tableLayoutPanel1.Height = panel1.Height - 5;
+            Hora.Width = panel1.Width;
+
+            tableLayoutPanel1.Width = panel1.Width - 5;
+            tableLayoutPanel1.Height = panel1.Height - Setmana.Height - Hora.Height;
 
             Setmana.Width = panel1.Width;
             SetColors(0, 128, 255);
@@ -49,6 +78,12 @@ namespace Calendari
             Dissabte.BackColor = Color.FromArgb(red, green, blue);
         }
         
+        private void SetHora()
+        {
+            hora = DateTime.Now;
+            Hora.Text = hora.Hour + ":" + hora.Minute;
+        }
+
         private void Calendari_KeyDown(object sender, KeyEventArgs e)
         {
             if (Input.GetState())
@@ -69,6 +104,9 @@ namespace Calendari
                     break;
                 case Keys.Space:
                     SpaceControl(true);   
+                    break;
+                case Keys.Escape:
+                    Application.Exit();
                     break;
             }
         }
@@ -116,7 +154,7 @@ namespace Calendari
                         if (!Arkanoid)
                         {
                             label2.Text = "Obrint Arkanoid\nTreu la mà";
-                            label2.BackColor = panel1.BackColor;
+                            label2.BackColor = tableLayoutPanel1.BackColor;
                             label2.Location = new System.Drawing.Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
                             label2.Visible = true;
                         }
@@ -173,18 +211,24 @@ namespace Calendari
         {            
             DateTime monday = mc.AddDays(-((int)mc.DayOfWeek - 1));
             DateTime sunday = monday.AddDays(6);
-            SetText(string.Format("Setmana del {0} de {1} de {2} al {3} de {4} de {5}",
-                monday.Day, GetMonth(monday.Month), monday.Year, sunday.Day, GetMonth(sunday.Month), sunday.Year), Setmana);
-            Dilluns.Text = "Dilluns " + monday.Day;
-            Dimarts.Text = "Dimarts " + monday.AddDays(1).Day;
-            Dimecres.Text = "Dimecres " + monday.AddDays(2).Day;
-            Dijous.Text = "Dijous " + monday.AddDays(3).Day;
-            Divendres.Text = "Divendres " + monday.AddDays(4).Day;
-            Dissabte.Text = "Dissabte " + monday.AddDays(5).Day;
-            Dilluns.Image = new Bitmap("test.png");
+            if (monday.Month == sunday.Month)
+            {
+                SetText(GetMonth(monday.Month).ToUpper() + " " + monday.Year, Setmana);
+            }
+            else
+            {
+                SetText(string.Format("{0} - {1}", GetMonth(monday.Month).ToUpper() + " " + monday.Year, GetMonth(sunday.Month).ToUpper() + " " + sunday.Year), Setmana);
+            }
+            Dilluns.Text = "DILLUNS \n" + monday.Day;
+            Dimarts.Text = "DIMARTS \n" + monday.AddDays(1).Day;
+            Dimecres.Text = "DIMECRES \n" + monday.AddDays(2).Day;
+            Dijous.Text = "DIJOUS \n" + monday.AddDays(3).Day;
+            Divendres.Text = "DIVENDRES \n" + monday.AddDays(4).Day;
+            Dissabte.Text = "DISSABTE \n" + monday.AddDays(5).Day;
+            //Dilluns.Image = new Bitmap("test.png");
         }
 
-        private void SetText(string text, TextBox tb)
+        private void SetText(string text, Label tb)
         {                       
             tb.Text = text;
         }
@@ -290,10 +334,16 @@ namespace Calendari
             }
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void timer2_Tick(object sender, EventArgs e)
         {
             if (Input.GetState())
                 CheckPhidgets();
+            SetHora();
         }
     }
 }
