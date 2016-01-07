@@ -4,7 +4,6 @@
     {
         public string Name;
         public string Professor;
-        public int Repeat;
         public Date Date;
         public Time Start;
         public Time Finish;
@@ -35,7 +34,7 @@
                 case 8:
                     return 0;
                 case 9:
-                    if (min >= 30)
+                    if (min > 30)
                         return 1;
                     else
                         return 0;
@@ -44,7 +43,7 @@
                 case 11:
                     return 2;
                 case 12:
-                    if (min >= 30)
+                    if (min > 30)
                         return 3;
                     else
                         return 2;
@@ -53,7 +52,7 @@
                 case 14:
                     return 4;
                 case 15:
-                    if (min >= 30)
+                    if (min > 30)
                         return 5;
                     else
                         return 4;
@@ -62,7 +61,7 @@
                 case 17:
                     return 6;
                 case 18:
-                    if (min >= 30)
+                    if (min > 30)
                         return 7;
                     else
                         return 6;
@@ -70,7 +69,11 @@
                 case 20:
                 case 21:
                     return 7;
+                default:
+                    return -1;
             }
+
+
         }
     }
 }

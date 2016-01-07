@@ -26,6 +26,8 @@ namespace Calendari
             GetSetmanaActual();
             Input.StartInput();
             timer2.Start();
+            timer1.Start();
+            timer1_Tick(this, null);
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             Location = Screen.PrimaryScreen.WorkingArea.Location;
@@ -209,6 +211,12 @@ namespace Calendari
             Dijous.Text = "DIJOUS \n" + monday.AddDays(3).Day;
             Divendres.Text = "DIVENDRES \n" + monday.AddDays(4).Day;
             Dissabte.Text = "DISSABTE \n" + monday.AddDays(5).Day;
+
+            foreach(Label lbl in Dies)
+            {
+                lbl.Text = "";
+            }
+            timer1_Tick(this, null);
         }
 
         private void SetText(string text, Label tb)
@@ -333,6 +341,7 @@ namespace Calendari
         {
             Parser.ReadXML("test.xml");
             List<Clase> classes = Parser.GetClases();
+            ManageClases(classes);
         }
 
         private void ManageClases(List<Clase> classes)
@@ -340,10 +349,16 @@ namespace Calendari
             foreach (Clase c in classes)
             {
                 DateTime dt = new DateTime(c.Date.Year, c.Date.Month, c.Date.Day);
-                if (dt >= monday && dt < sunday)
+                if (dt.DayOfWeek != DayOfWeek.Sunday)
                 {
+                    int day = (int)dt.DayOfWeek - 1;
                     int inici = Toolz.GetTimeFragment(c.Start);
                     int final = Toolz.GetTimeFragment(c.Finish);
+
+                    for (int i = inici; i <= final; i++)
+                    {
+                        Dies[day, i].Text = c.Name + "\n" + c.Professor;
+                    }
                 }
             }
         }
@@ -370,6 +385,12 @@ namespace Calendari
                     Dies[i, j] = lbl;
                 }
             }
+        }
+
+        private int GetDay(Date date)
+        {
+            int curr = date.Day;
+            return curr - monday.Day;
         }
     }
 }
