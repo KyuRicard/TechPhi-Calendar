@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Calendari
@@ -15,7 +11,13 @@ namespace Calendari
         {
             var reader = new XmlSerializer(typeof(List<Clase>));
             var file = new StreamReader(route);
+            List<Clase> llista = (List<Clase>)reader.Deserialize(file);
+            classes = llista;
+        }
 
+        public static List<Clase> GetClases()
+        {
+            return classes;
         }
 
         public static bool WriteXML(string route)

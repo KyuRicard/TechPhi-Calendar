@@ -1,4 +1,6 @@
-﻿namespace Calendari
+﻿using System.Windows.Forms;
+
+namespace Calendari
 {
     partial class Calendari
     {
@@ -52,6 +54,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -145,7 +148,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(170, 63);
             this.label11.TabIndex = 15;
-            this.label11.Text = "18:30\r\n20:00";
+            this.label11.Text = "18:30\r\n21:30";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Dissabte
@@ -344,6 +347,11 @@
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label2.Visible = false;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 90000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Calendari
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,6 +397,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label Hora;
+        private Label[,] Dies = new Label[6,8];
+        private Timer timer1;
     }
 }
 

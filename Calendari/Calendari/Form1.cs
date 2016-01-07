@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,38 +9,17 @@ namespace Calendari
     {
         DateTime mc;
         DateTime hora;
+        DateTime monday, sunday;
         long timePressed = 0;
         bool isPressed = false;
         bool A = false, D = false;
         bool Arkanoid = false;
+        bool Blink = false;
 
         public Calendari()
         {
-            Clase c1 = new Clase
-            {
-                Name = "test",
-                Professor = "test",
-                Repeat = 1,
-                Date = new Date { Day = 1, Month = 1, Year = 1 },
-                Start = new Time { Hour = 10, Minute = 00 },
-                Finish = new Time { Hour = 13, Minute = 00 }
-            };
-
-            Clase c2 = new Clase
-            {
-                Name = "test2",
-                Professor = "test2",
-                Repeat = -1,
-                Date = new Date { Day = 2, Month = 5, Year = 1999 },
-                Start = new Time { Hour = 10, Minute = 00 },
-                Finish = new Time { Hour = 13, Minute = 00 }
-            };
-
-            Parser.AddClase(c1);
-            Parser.AddClase(c2);
-            Parser.WriteXML("test.xml");
-
             InitializeComponent();
+            InitLabels();
             mc = DateTime.Now;
             hora = DateTime.Now;
 
@@ -50,7 +30,7 @@ namespace Calendari
             WindowState = FormWindowState.Maximized;
             Location = Screen.PrimaryScreen.WorkingArea.Location;
             Size = Screen.PrimaryScreen.WorkingArea.Size;
-            Height = 1080;
+            Height = 900;
             panel1.Width = Width;
             panel1.Height = Height - 5;
 
@@ -81,7 +61,11 @@ namespace Calendari
         private void SetHora()
         {
             hora = DateTime.Now;
-            Hora.Text = hora.Hour + ":" + hora.Minute;
+            if (!Blink) 
+                Hora.Text = hora.Hour + ":" + hora.Minute.ToString("00");
+            else
+                Hora.Text = hora.Hour + " " + hora.Minute.ToString("00");
+            Blink = !Blink;
         }
 
         private void Calendari_KeyDown(object sender, KeyEventArgs e)
@@ -209,8 +193,8 @@ namespace Calendari
 
         private void GetSetmanaActual()
         {            
-            DateTime monday = mc.AddDays(-((int)mc.DayOfWeek - 1));
-            DateTime sunday = monday.AddDays(6);
+            monday = mc.AddDays(-((int)mc.DayOfWeek - 1));
+            sunday = monday.AddDays(6);
             if (monday.Month == sunday.Month)
             {
                 SetText(GetMonth(monday.Month).ToUpper() + " " + monday.Year, Setmana);
@@ -225,7 +209,6 @@ namespace Calendari
             Dijous.Text = "DIJOUS \n" + monday.AddDays(3).Day;
             Divendres.Text = "DIVENDRES \n" + monday.AddDays(4).Day;
             Dissabte.Text = "DISSABTE \n" + monday.AddDays(5).Day;
-            //Dilluns.Image = new Bitmap("test.png");
         }
 
         private void SetText(string text, Label tb)
@@ -344,6 +327,49 @@ namespace Calendari
             if (Input.GetState())
                 CheckPhidgets();
             SetHora();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Parser.ReadXML("test.xml");
+            List<Clase> classes = Parser.GetClases();
+        }
+
+        private void ManageClases(List<Clase> classes)
+        {
+            foreach (Clase c in classes)
+            {
+                DateTime dt = new DateTime(c.Date.Year, c.Date.Month, c.Date.Day);
+                if (dt >= monday && dt < sunday)
+                {
+                    int inici = Toolz.GetTimeFragment(c.Start);
+                    int final = Toolz.GetTimeFragment(c.Finish);
+                }
+            }
+        }
+
+        private void InitLabels()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Label lbl = new Label();
+                    lbl.AutoSize = true;
+                    lbl.Anchor = AnchorStyles.None;
+                    lbl.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+                    lbl.ForeColor = Color.White;
+                    lbl.Location = new Point(537, 192);
+                    lbl.Name = "Label_" + i + ":" + j;
+                    lbl.Size = new Size(170, 63);
+                    lbl.TabIndex = 7;
+                    lbl.Text = lbl.Name;
+                    lbl.TextAlign = ContentAlignment.MiddleCenter;
+                    lbl.Visible = true;
+                    tableLayoutPanel1.Controls.Add(lbl, i + 1, j + 1);
+                    Dies[i, j] = lbl;
+                }
+            }
         }
     }
 }
