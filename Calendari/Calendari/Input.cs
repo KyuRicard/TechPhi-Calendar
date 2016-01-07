@@ -11,8 +11,8 @@ namespace Calendari
         {
             phi = new InterPhi();
 
-            phi.AddSensor(new Sensor("0", "A", 850));
-            phi.AddSensor(new Sensor("1", "D", 850));
+            phi.AddSensor(new Sensor("0", "A", 900));
+            phi.AddSensor(new Sensor("1", "D", 900));
             phi.AddSensor(new Sensor("2", "SPACE", 500));
 
             phi.StartPhidget();
@@ -38,6 +38,11 @@ namespace Calendari
             {
                 Console.WriteLine("Sensor {0} Value {1}", s.Value, s.Activated);
             }
+        }
+
+        public static bool GetState()
+        {
+            return phi.GetState();
         }
     }
 }

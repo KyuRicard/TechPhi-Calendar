@@ -23,20 +23,36 @@ namespace Calendari
             WindowState = FormWindowState.Maximized;
             Location = Screen.PrimaryScreen.WorkingArea.Location;
             Size = Screen.PrimaryScreen.WorkingArea.Size;
-            panel1.Width = Width;
-            panel1.Height = Height;
+            Height = 900;
+            panel1.Width = Width - 5;
+            panel1.Height = Height - 5;
 
             panel2.Width = Width;
             panel2.Height = Height;
 
             tableLayoutPanel1.Width = panel1.Width;
-            tableLayoutPanel1.Height = panel1.Height;
+            tableLayoutPanel1.Height = panel1.Height - 5;
 
+            Setmana.Width = panel1.Width;
+            SetColors(0, 128, 255);
             label1.Location = new Point(0, Height - label1.Height);
         }
 
-        private void Calendari_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void SetColors(int red, int green, int blue)
         {
+            tableLayoutPanel1.BackColor = Color.FromArgb(red, green, blue);
+            Dilluns.BackColor = Color.FromArgb(red, green, blue);
+            Dimarts.BackColor = Color.FromArgb(red, green, blue);
+            Dimecres.BackColor = Color.FromArgb(red, green, blue);
+            Dijous.BackColor = Color.FromArgb(red, green, blue);
+            Divendres.BackColor = Color.FromArgb(red, green, blue);
+            Dissabte.BackColor = Color.FromArgb(red, green, blue);
+        }
+        
+        private void Calendari_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Input.GetState())
+                return;
             switch (e.KeyData)
             {
                 case Keys.A:
@@ -65,7 +81,7 @@ namespace Calendari
             }
             else
             {
-                label1.Location = new System.Drawing.Point(label1.Location.X + (label1.Width / 2) * v, label1.Location.Y);
+                label1.Location = new Point(label1.Location.X + (label1.Width / 2) * v, label1.Location.Y);
                 if (label1.Location.X < 0)
                 {
                     label1.Location = new System.Drawing.Point(0, label1.Location.Y);
@@ -159,6 +175,13 @@ namespace Calendari
             DateTime sunday = monday.AddDays(6);
             SetText(string.Format("Setmana del {0} de {1} de {2} al {3} de {4} de {5}",
                 monday.Day, GetMonth(monday.Month), monday.Year, sunday.Day, GetMonth(sunday.Month), sunday.Year), Setmana);
+            Dilluns.Text = "Dilluns " + monday.Day;
+            Dimarts.Text = "Dimarts " + monday.AddDays(1).Day;
+            Dimecres.Text = "Dimecres " + monday.AddDays(2).Day;
+            Dijous.Text = "Dijous " + monday.AddDays(3).Day;
+            Divendres.Text = "Divendres " + monday.AddDays(4).Day;
+            Dissabte.Text = "Dissabte " + monday.AddDays(5).Day;
+            Dilluns.Image = new Bitmap("test.png");
         }
 
         private void SetText(string text, TextBox tb)
@@ -201,8 +224,10 @@ namespace Calendari
             }
         }
 
-        private void Calendari_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        private void Calendari_KeyUp(object sender, KeyEventArgs e)
         {
+            if (Input.GetState())
+                return;
             if (e.KeyData == Keys.Space)
             {
                 SpaceControl(false);
@@ -214,20 +239,22 @@ namespace Calendari
             if (Input.GetInput("A") && !A)
             {                
                 A = true;
+                LeftControl(true);
             }
             else if (Input.GetInput("D") && !D)
             {                
                 D = true;
+                RightControl(true);
             }
             else if (!Input.GetInput("A") && A)
             {
                 A = false;
-                MoveDays(-7);
+                LeftControl(false);
             }
             else if (!Input.GetInput("D") && D)
             {
-                D = false;
-                MoveDays(7);
+                D = false;                
+                RightControl(false);
             }
             else if (Input.GetInput("SPACE"))
             {
@@ -235,13 +262,38 @@ namespace Calendari
             }
             else if (!Input.GetInput("SPACE") && isPressed)
             {
-                //SpaceControl(false);
+                SpaceControl(false);
+            }
+        }
+
+        private void LeftControl(bool v)
+        {
+            if (v && Arkanoid)
+            {
+                MovePlatform(-1);
+            }
+            else if (!Arkanoid && !v)
+            {
+                MoveDays(-7);
+            }
+        }
+
+        private void RightControl(bool enabled)
+        {
+            if (enabled && Arkanoid)
+            {
+                MovePlatform(1);
+            }
+            else if (!Arkanoid && !enabled)
+            {
+                MoveDays(7);
             }
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            CheckPhidgets();
+            if (Input.GetState())
+                CheckPhidgets();
         }
     }
 }

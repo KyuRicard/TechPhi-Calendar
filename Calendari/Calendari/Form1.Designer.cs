@@ -31,12 +31,19 @@
             this.components = new System.ComponentModel.Container();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.Setmana = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.Dissabte = new System.Windows.Forms.Label();
+            this.Divendres = new System.Windows.Forms.Label();
+            this.Dijous = new System.Windows.Forms.Label();
+            this.Dimecres = new System.Windows.Forms.Label();
+            this.Dimarts = new System.Windows.Forms.Label();
+            this.Dilluns = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +60,115 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1257, 673);
             this.panel1.TabIndex = 1;
+            // 
+            // Setmana
+            // 
+            this.Setmana.Enabled = false;
+            this.Setmana.Location = new System.Drawing.Point(0, 0);
+            this.Setmana.Name = "Setmana";
+            this.Setmana.ReadOnly = true;
+            this.Setmana.Size = new System.Drawing.Size(1257, 20);
+            this.Setmana.TabIndex = 3;
+            this.Setmana.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.Controls.Add(this.Dissabte, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Divendres, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Dijous, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Dimecres, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Dimarts, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Dilluns, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 26);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1251, 647);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // Dissabte
+            // 
+            this.Dissabte.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Dissabte.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dissabte.ForeColor = System.Drawing.Color.White;
+            this.Dissabte.Location = new System.Drawing.Point(1074, 5);
+            this.Dissabte.Name = "Dissabte";
+            this.Dissabte.Size = new System.Drawing.Size(170, 63);
+            this.Dissabte.TabIndex = 6;
+            this.Dissabte.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Divendres
+            // 
+            this.Divendres.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Divendres.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Divendres.ForeColor = System.Drawing.Color.White;
+            this.Divendres.Location = new System.Drawing.Point(895, 5);
+            this.Divendres.Name = "Divendres";
+            this.Divendres.Size = new System.Drawing.Size(170, 63);
+            this.Divendres.TabIndex = 5;
+            this.Divendres.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Dijous
+            // 
+            this.Dijous.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Dijous.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dijous.ForeColor = System.Drawing.Color.White;
+            this.Dijous.Location = new System.Drawing.Point(717, 5);
+            this.Dijous.Name = "Dijous";
+            this.Dijous.Size = new System.Drawing.Size(170, 63);
+            this.Dijous.TabIndex = 4;
+            this.Dijous.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Dimecres
+            // 
+            this.Dimecres.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Dimecres.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dimecres.ForeColor = System.Drawing.Color.White;
+            this.Dimecres.Location = new System.Drawing.Point(539, 5);
+            this.Dimecres.Name = "Dimecres";
+            this.Dimecres.Size = new System.Drawing.Size(170, 63);
+            this.Dimecres.TabIndex = 3;
+            this.Dimecres.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Dimarts
+            // 
+            this.Dimarts.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Dimarts.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dimarts.ForeColor = System.Drawing.Color.White;
+            this.Dimarts.Location = new System.Drawing.Point(361, 5);
+            this.Dimarts.Name = "Dimarts";
+            this.Dimarts.Size = new System.Drawing.Size(170, 63);
+            this.Dimarts.TabIndex = 2;
+            this.Dimarts.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // Dilluns
+            // 
+            this.Dilluns.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Dilluns.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dilluns.ForeColor = System.Drawing.Color.White;
+            this.Dilluns.Location = new System.Drawing.Point(183, 5);
+            this.Dilluns.Name = "Dilluns";
+            this.Dilluns.Size = new System.Drawing.Size(170, 63);
+            this.Dilluns.TabIndex = 0;
+            this.Dilluns.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
@@ -73,43 +189,6 @@
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Plataforma";
-            // 
-            // Setmana
-            // 
-            this.Setmana.Enabled = false;
-            this.Setmana.Location = new System.Drawing.Point(0, 0);
-            this.Setmana.Name = "Setmana";
-            this.Setmana.ReadOnly = true;
-            this.Setmana.Size = new System.Drawing.Size(1257, 20);
-            this.Setmana.TabIndex = 3;
-            this.Setmana.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
-            this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 26);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 10;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1251, 647);
-            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // label2
             // 
@@ -139,6 +218,7 @@
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Calendari_KeyUp);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -154,6 +234,12 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Dilluns;
+        private System.Windows.Forms.Label Dissabte;
+        private System.Windows.Forms.Label Divendres;
+        private System.Windows.Forms.Label Dijous;
+        private System.Windows.Forms.Label Dimecres;
+        private System.Windows.Forms.Label Dimarts;
     }
 }
 
