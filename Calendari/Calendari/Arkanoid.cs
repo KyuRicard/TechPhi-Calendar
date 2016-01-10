@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace Calendari
         public static Ball b;
         public const double Movement = 5;
         private static bool Thrown = false;
-        public static float Score { get; set; }
+        public static int Score { get; set; }
         public static List<Label> Platforms = new List<Label>();
         private static bool Finish = false;
         public static int seed { get; set; }
@@ -97,6 +98,30 @@ namespace Calendari
             }
         }
 
+        private static void End()
+        {
+            Thrown = false;
+            Finish = true;
+            int[] scores = Parser.GetScores();
+            for (int i = 0; i < scores.Length; i++)
+            {
+                if (Score > scores[i])
+                {
+                    for (int j = scores.Length - 1; j > i; j--)
+                    {
+                        scores[j] = scores[j - 1];
+                    }
+                    scores[i] = Score;
+                    break;
+                }
+            }
+            foreach(int i in scores)
+            {
+                Console.WriteLine(i);
+            }
+            Parser.SetScores(scores);
+        }
+
         private static void CheckCollision(int width, int height)
         {
             switch(b.Dir)
@@ -107,8 +132,7 @@ namespace Calendari
                     else if (b.Y + Movement + b.Height >= height)
                     {
                         b.Dir = Direction.TopRight;
-                        Thrown = false;
-                        Finish = true;
+                        End();
                     }                    
                     break;
                 case Direction.BotRight:
@@ -117,8 +141,7 @@ namespace Calendari
                     else if (b.Y + Movement + b.Height >= height)
                     {
                         b.Dir = Direction.TopRight;
-                        Thrown = false;
-                        Finish = true;
+                        End();
                     }
                     break;
                 case Direction.TopLeft:

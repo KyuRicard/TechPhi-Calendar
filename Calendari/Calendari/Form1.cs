@@ -59,6 +59,8 @@ namespace Calendari
 
             ArkanoidControl.InitBall(TheBall);
             TheBall.Image = new Bitmap(Image.FromFile("img/bola.png"), 64, 64);
+
+            Parser.ReadScore();
         }
 
         private void SetColors(int red, int green, int blue)

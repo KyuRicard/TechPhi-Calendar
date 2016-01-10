@@ -7,12 +7,13 @@ namespace Calendari
     class Parser
     {
         private static List<Clase> classes = new List<Clase>();
+        private static int[] Score = new int[10];
+
         public static void ReadXML(string route)
         {
             var reader = new XmlSerializer(typeof(List<Clase>));
             var file = new StreamReader(route);
-            List<Clase> llista = (List<Clase>)reader.Deserialize(file);
-            classes = llista;
+            classes = (List<Clase>)reader.Deserialize(file);
         }
 
         public static List<Clase> GetClases()
@@ -41,5 +42,57 @@ namespace Calendari
         {
             classes.Add(c);
         }
+        
+        public static void ReadScore()
+        {
+            var reader = new XmlSerializer(typeof(int[]));
+            var file = new StreamReader("scores.xml");
+            Score = (int[])reader.Deserialize(file);
+        }
+
+        public static void WriteScore(string route)
+        {
+            if (!File.Exists(route))
+            {
+                File.Create(route).Close();
+            }            
+            var writer = new XmlSerializer(typeof(int[]));
+            var file = new StreamWriter(route);
+            writer.Serialize(file, Score);
+            file.Close();
+        }
+
+        public static int[] GetScores()
+        {
+            return Order();
+        }
+
+        private static int[] Order()
+        {
+            int[] score = Score;
+            for (int i = 0; i < score.Length; i++)
+            {
+                for (int j = i; j < score.Length; j++)
+                {
+                    if (score[i] < score[j])
+                    {
+                        int tmp = score[i];
+                        score[i] = score[j];
+                        score[j] = tmp;
+                        i--;
+                        break;
+                    }
+                }
+            }
+            return score;
+        }
+
+        public static void SetScores(int[] score)
+        {
+            Score = score;
+            WriteScore("scores.xml");
+        }
     }
+
+   
 }
