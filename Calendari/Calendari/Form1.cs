@@ -15,6 +15,8 @@ namespace Calendari
         bool A = false, D = false;
         bool Arkanoid = false;
         bool Blink = false;
+        public static int ScreenHeight;
+        private Random rand;
 
         public Calendari()
         {
@@ -23,16 +25,23 @@ namespace Calendari
             mc = DateTime.Now;
             hora = DateTime.Now;
 
+            rand = new Random();
+
             GetSetmanaActual();
+
             Input.StartInput();
             timer2.Start();
             timer1.Start();
+            UpdateTick.Start();
             timer1_Tick(this, null);
+
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             Location = Screen.PrimaryScreen.WorkingArea.Location;
             Size = Screen.PrimaryScreen.WorkingArea.Size;
-            Height = 900;
+
+            Height = 1080;
+            ScreenHeight = Height;
             panel1.Width = Width;
             panel1.Height = Height - 5;
 
@@ -46,7 +55,10 @@ namespace Calendari
 
             Setmana.Width = panel1.Width;
             SetColors(0, 128, 255);
-            label1.Location = new Point(0, Height - label1.Height);
+            Platform.Location = new Point(0, Height - Platform.Height);
+
+            ArkanoidControl.InitBall(TheBall);
+            TheBall.Image = new Bitmap(Image.FromFile("img/bola.png"), 64, 64);
         }
 
         private void SetColors(int red, int green, int blue)
@@ -99,20 +111,20 @@ namespace Calendari
 
         private void MovePlatform(int v)
         {
-            if (label1.Location.X <= 0 && v < 0 || label1.Location.X >= panel2.Width - label1.Width && v > 0)
+            if (Platform.Location.X <= 0 && v < 0 || Platform.Location.X >= panel2.Width - Platform.Width && v > 0)
             {
                 return;
             }
             else
             {
-                label1.Location = new Point(label1.Location.X + (label1.Width / 2) * v, label1.Location.Y);
-                if (label1.Location.X < 0)
+                Platform.Location = new Point(Platform.Location.X + (Platform.Width / 2) * v, Platform.Location.Y);
+                if (Platform.Location.X < 0)
                 {
-                    label1.Location = new System.Drawing.Point(0, label1.Location.Y);
+                    Platform.Location = new Point(0, Platform.Location.Y);
                 }
-                if (label1.Location.X > panel2.Width - label1.Width)
+                if (Platform.Location.X > panel2.Width - Platform.Width)
                 {
-                    label1.Location = new System.Drawing.Point(panel2.Width - label1.Width, label1.Location.Y);
+                    Platform.Location = new Point(panel2.Width - Platform.Width, Platform.Location.Y);
                 }
             }
         }
@@ -141,14 +153,14 @@ namespace Calendari
                         {
                             label2.Text = "Obrint Arkanoid\nTreu la mà";
                             label2.BackColor = tableLayoutPanel1.BackColor;
-                            label2.Location = new System.Drawing.Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
+                            label2.Location = new Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
                             label2.Visible = true;
                         }
                         else
                         {                            
                             label2.Text = "Obrint Calendari\nTreu la mà";
                             label2.BackColor = panel2.BackColor;
-                            label2.Location = new System.Drawing.Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
+                            label2.Location = new Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
                             label2.Visible = true;
                         }
                     }
@@ -170,6 +182,9 @@ namespace Calendari
                         panel2.Visible = true;
                         Arkanoid = true;
                         label2.Visible = false;
+                        int seed = (rand.Next(10) + 1);
+                        panel2.BackgroundImage = new Bitmap(Image.FromFile("img/" + seed + ".jpg"), Width, Height);
+                        ArkanoidControl.seed = seed;
                     }
                     isPressed = false;
                 }
@@ -178,8 +193,9 @@ namespace Calendari
                     long timeNow = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
                     if (timeNow - timePressed < 2000)
                     {
-                        mc = DateTime.Now;
-                        GetSetmanaActual();
+                        label2.Visible = false;
+                        GeneratePlatforms(ArkanoidControl.seed);
+                        ArkanoidControl.ThrowBall();
                     }
                     else
                     {
@@ -187,6 +203,10 @@ namespace Calendari
                         panel2.Visible = false;
                         Arkanoid = false;
                         label2.Visible = false;
+                        ArkanoidControl.Close();
+                        panel2.Controls.Clear();
+                        panel2.Controls.Add(TheBall);
+                        panel2.Controls.Add(Platform);
                     }
                     isPressed = false;
                 }
@@ -216,7 +236,9 @@ namespace Calendari
             {
                 lbl.Text = "";
             }
-            timer1_Tick(this, null);
+
+            List<Clase> classes = Parser.GetClases();
+            ManageClases(classes);
         }
 
         private void SetText(string text, Label tb)
@@ -363,6 +385,21 @@ namespace Calendari
             }
         }
 
+        private void UpdateTick_Tick(object sender, EventArgs e)
+        {
+            if (Arkanoid)
+            {
+                bool playing = ArkanoidControl.MoveBall(Width, Height, TheBall, Platform);
+                if (!playing)
+                {
+                    label2.Text = "GAME OVER!\nScore: " + ArkanoidControl.Score;
+                    label2.BackColor = panel2.BackColor;
+                    label2.Location = new Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
+                    label2.Visible = true;
+                }
+            }
+        }
+
         private void InitLabels()
         {
             for (int i = 0; i < 6; i++)
@@ -391,6 +428,36 @@ namespace Calendari
         {
             int curr = date.Day;
             return curr - monday.Day;
+        }
+
+        public void GeneratePlatforms(int seed)
+        {
+            panel2.Controls.Clear();
+            panel2.Controls.Add(TheBall);
+            panel2.Controls.Add(Platform);
+            ArkanoidControl.Score = 0;
+            Color[] colors = Planet.GetColor(seed);
+            ArkanoidControl.Platforms.Clear();
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Label lbl = new Label();
+                    lbl.AutoSize = false;
+                    lbl.Size = new Size(150, 30);
+                    lbl.Location = new Point(j * Width/10, i * Height/15);                   
+                    if (i * j % 2 == 0)
+                    {
+                        lbl.BackColor = colors[0];
+                    } 
+                    else
+                    {
+                        lbl.BackColor = colors[1];
+                    }
+                    ArkanoidControl.Platforms.Add(lbl);
+                    panel2.Controls.Add(lbl);
+                }
+            }
         }
     }
 }

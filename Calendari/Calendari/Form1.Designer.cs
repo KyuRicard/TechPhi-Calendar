@@ -52,9 +52,11 @@ namespace Calendari
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Platform = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.UpdateTick = new System.Windows.Forms.Timer(this.components);
+            this.TheBall = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -316,22 +318,22 @@ namespace Calendari
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.TheBall);
+            this.panel2.Controls.Add(this.Platform);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1257, 673);
             this.panel2.TabIndex = 4;
             this.panel2.Visible = false;
             // 
-            // label1
+            // Platform
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.label1.Location = new System.Drawing.Point(599, 652);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(57, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Plataforma";
+            this.Platform.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Platform.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Platform.Location = new System.Drawing.Point(599, 652);
+            this.Platform.Name = "Platform";
+            this.Platform.Size = new System.Drawing.Size(200, 35);
+            this.Platform.TabIndex = 0;
             // 
             // label2
             // 
@@ -352,14 +354,26 @@ namespace Calendari
             this.timer1.Interval = 90000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // UpdateTick
+            // 
+            this.UpdateTick.Interval = 10;
+            this.UpdateTick.Tick += new System.EventHandler(this.UpdateTick_Tick);
+            // 
+            // TheBall
+            // 
+            this.TheBall.Location = new System.Drawing.Point(614, 405);
+            this.TheBall.Name = "TheBall";
+            this.TheBall.Size = new System.Drawing.Size(64, 64);
+            this.TheBall.TabIndex = 1;
+            // 
             // Calendari
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "Calendari";
             this.Text = "Calendari";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Calendari_KeyDown);
@@ -367,7 +381,6 @@ namespace Calendari
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -379,7 +392,7 @@ namespace Calendari
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label Setmana;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Platform;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label Dilluns;
         private System.Windows.Forms.Label Dissabte;
@@ -399,6 +412,8 @@ namespace Calendari
         private System.Windows.Forms.Label Hora;
         private Label[,] Dies = new Label[6,8];
         private Timer timer1;
+        protected internal Timer UpdateTick;
+        private Label TheBall;
     }
 }
 
