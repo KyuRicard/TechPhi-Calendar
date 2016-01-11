@@ -40,7 +40,7 @@ namespace Calendari
             Location = Screen.PrimaryScreen.WorkingArea.Location;
             Size = Screen.PrimaryScreen.WorkingArea.Size;
 
-            Height = 1080;
+            Height = 900;
             ScreenHeight = Height;
             panel1.Width = Width;
             panel1.Height = Height - 5;

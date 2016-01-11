@@ -1,5 +1,6 @@
 ﻿using PhidgetInteraction;
 using System;
+using System.Collections.Generic;
 
 namespace Calendari
 {
@@ -11,9 +12,9 @@ namespace Calendari
         {
             phi = new InterPhi();
 
-            phi.AddSensor(new Sensor("0", "A", 900));
-            phi.AddSensor(new Sensor("1", "D", 900));
-            phi.AddSensor(new Sensor("2", "SPACE", 500));
+            phi.AddSensor(new Sensor("0", "A", 400));
+            phi.AddSensor(new Sensor("1", "D", 400));
+            phi.AddSensor(new Sensor("2", "SPACE", 400));
 
             phi.StartPhidget();
         }
@@ -36,13 +37,19 @@ namespace Calendari
         {
             foreach (Sensor s in phi.GetKeys())
             {
-                Console.WriteLine("Sensor {0} Value {1}", s.Value, s.Activated);
+                if (s.Activated)
+                    Console.WriteLine("Sensor {0} Value {1} RawValue {2}", s.Value, s.Activated, s.RawValue);
             }
         }
 
         public static bool GetState()
         {
-            return /*phi.GetState();*/false;
+            return phi.GetState();
+        }
+
+        public static List<Sensor> GetSensors()
+        {
+            return phi.sensors;
         }
     }
 }

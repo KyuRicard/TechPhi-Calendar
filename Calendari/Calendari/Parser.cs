@@ -46,6 +46,10 @@ namespace Calendari
         public static void ReadScore()
         {
             var reader = new XmlSerializer(typeof(int[]));
+            if (!File.Exists("scores.xml"))
+            {
+                WriteScore("scores.xml");
+            }
             var file = new StreamReader("scores.xml");
             Score = (int[])reader.Deserialize(file);
         }
@@ -93,6 +97,4 @@ namespace Calendari
             WriteScore("scores.xml");
         }
     }
-
-   
 }

@@ -8,7 +8,7 @@ namespace Calendari
     class ArkanoidControl
     {
         public static Ball b;
-        public const double Movement = 5;
+        public static double Movement = 5;
         private static bool Thrown = false;
         public static int Score { get; set; }
         public static List<Label> Platforms = new List<Label>();
@@ -50,9 +50,16 @@ namespace Calendari
                 b.X = platform.Location.X + (platform.Size.Width / 2) - (b.Width / 2);
                 b.Y = platform.Location.Y - platform.Size.Height;
             }
-            
+
+            SetSpeed();
             realBall.Location = new Point((int)b.X, (int)b.Y);
             return !Finish;
+        }
+
+        private static void SetSpeed()
+        {
+            Movement = 5 + (Score / 20);
+            Movement = Math.Min(Movement, 15);
         }
 
         private static void SetMovement()
