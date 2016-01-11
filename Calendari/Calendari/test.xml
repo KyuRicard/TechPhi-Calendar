@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfClase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Clase>
+    <Name>test</Name>
+    <Professor>test</Professor>
+    <Date>
+      <Day>9</Day>
+      <Month>1</Month>
+      <Year>2016</Year>
+    </Date>
+    <Start>
+      <Hour>8</Hour>
+      <Minute>0</Minute>
+    </Start>
+    <Finish>
+      <Hour>9</Hour>
+      <Minute>30</Minute>
+    </Finish>
+  </Clase>
+  <Clase>
+    <Name>test2</Name>
+    <Professor>test2</Professor>
+    <Date>
+      <Day>9</Day>
+      <Month>1</Month>
+      <Year>2016</Year>
+    </Date>
+    <Start>
+      <Hour>9</Hour>
+      <Minute>30</Minute>
+    </Start>
+    <Finish>
+      <Hour>11</Hour>
+      <Minute>0</Minute>
+    </Finish>
+  </Clase>
+  <Clase>
+    <Name>Fisica Quantica</Name>
+    <Professor>test2</Professor>
+    <Date>
+      <Day>8</Day>
+      <Month>1</Month>
+      <Year>2016</Year>
+    </Date>
+    <Start>
+      <Hour>9</Hour>
+      <Minute>30</Minute>
+    </Start>
+    <Finish>
+      <Hour>11</Hour>
+      <Minute>0</Minute>
+    </Finish>
+  </Clase>
+</ArrayOfClase>
