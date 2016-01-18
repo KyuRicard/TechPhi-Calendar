@@ -51,5 +51,10 @@ namespace Calendari
         {
             return phi.sensors;
         }
+
+        public static int GetRawValue(int sensor)
+        {
+            return GetSensors()[sensor].RawValue;
+        }
     }
 }

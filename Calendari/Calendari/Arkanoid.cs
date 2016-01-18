@@ -7,11 +7,12 @@ namespace Calendari
 {
     class ArkanoidControl
     {
+        public static int STOPGAME = 0, CONTINUE = 1, REDRAW = 2;
         public static Ball b;
         public static double Movement = 5;
-        private static bool Thrown = false;
+        public static bool Thrown = false;
         public static int Score { get; set; }
-        public static List<Label> Platforms = new List<Label>();
+        public static List<Control> Platforms = new List<Control>();
         private static bool Finish = false;
         public static int seed { get; set; }
 
@@ -35,7 +36,7 @@ namespace Calendari
             b.Dir = Direction.TopRight;
         }
 
-        public static bool MoveBall(int width, int height, Label realBall, Label platform)
+        public static int MoveBall(int width, int height, Label realBall, Label platform)
         {
             if (Thrown)
             {
@@ -53,13 +54,27 @@ namespace Calendari
 
             SetSpeed();
             realBall.Location = new Point((int)b.X, (int)b.Y);
-            return !Finish;
+            if (!Finish)
+            {
+                if (Platforms.Count == 0 && Thrown)
+                {
+                    return REDRAW;
+                }
+                else
+                {
+                    return CONTINUE;
+                }
+            }
+            else
+            {
+                return STOPGAME;
+            }
         }
 
         private static void SetSpeed()
         {
-            Movement = 5 + (Score / 20);
-            Movement = Math.Min(Movement, 15);
+            Movement = 5 + (Score / 30);
+            Movement = Math.Min(Movement, 13);
         }
 
         private static void SetMovement()
@@ -136,7 +151,7 @@ namespace Calendari
                 case Direction.BotLeft:
                     if (b.X - Movement <= 0)
                         b.Dir = Direction.BotRight;
-                    else if (b.Y + Movement + b.Height >= height)
+                    else if (b.Y + Movement + b.Height > height)
                     {
                         b.Dir = Direction.TopRight;
                         End();
@@ -145,7 +160,7 @@ namespace Calendari
                 case Direction.BotRight:
                     if (b.X + Movement + b.Width >= width)
                         b.Dir = Direction.BotLeft;
-                    else if (b.Y + Movement + b.Height >= height)
+                    else if (b.Y + Movement + b.Height > height)
                     {
                         b.Dir = Direction.TopRight;
                         End();
@@ -199,7 +214,7 @@ namespace Calendari
 
         private static void PlatformsCollision(Label ball)
         {
-            foreach (Label platform in Platforms)
+            foreach (Control platform in Platforms)
             {
                 Bounds ballBounds = new Bounds { X = (int)b.X, Y = (int)b.Y, W = b.Width, H = b.Height };
                 Bounds platformBounds = new Bounds { X = platform.Location.X, Y = platform.Location.Y, W = platform.Width, H = platform.Height };
@@ -244,12 +259,12 @@ namespace Calendari
             }
         }
 
-        private static bool InBounds(Label platform, Label ball)
+        private static bool InBounds(Control platform, Label ball)
         {            
             return platform.Bounds.IntersectsWith(ball.Bounds);
         }
 
-        private static Where WhereIsBallRespectPlatform(Bounds obj1, Bounds obj2, Label platform, Label ball)
+        private static Where WhereIsBallRespectPlatform(Bounds obj1, Bounds obj2, Control platform, Label ball)
         {
             if (!InBounds(platform, ball))
             {

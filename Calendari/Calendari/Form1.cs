@@ -55,7 +55,7 @@ namespace Calendari
 
             Setmana.Width = panel1.Width;
             SetColors(0, 128, 255);
-            Platform.Location = new Point(0, Height - Platform.Height);
+            Platform.Location = new Point(Width - Platform.Width, Height - Platform.Height);
 
             ArkanoidControl.InitBall(TheBall);
             TheBall.Image = new Bitmap(Image.FromFile("img/bola.png"), 64, 64);
@@ -196,6 +196,7 @@ namespace Calendari
                     if (timeNow - timePressed < 2000)
                     {
                         label2.Visible = false;
+                        ArkanoidControl.Score = 0;
                         GeneratePlatforms(ArkanoidControl.seed);
                         ArkanoidControl.ThrowBall();
                     }
@@ -391,13 +392,20 @@ namespace Calendari
         {
             if (Arkanoid)
             {
-                bool playing = ArkanoidControl.MoveBall(Width, Height, TheBall, Platform);
-                if (!playing)
+                int playing = ArkanoidControl.MoveBall(Width, Height, TheBall, Platform);
+                if (playing == 0)
                 {
                     label2.Text = "GAME OVER!\nScore: " + ArkanoidControl.Score;
                     label2.BackColor = panel2.BackColor;
                     label2.Location = new Point(Width / 2 - label2.Width / 2, Height / 2 - label2.Height / 2);
                     label2.Visible = true;
+                }
+                else if (playing == 2)
+                {
+                    ArkanoidControl.b.X = Platform.Location.X + (Platform.Size.Width / 2) - (ArkanoidControl.b.Width / 2);
+                    ArkanoidControl.b.Y = Platform.Location.Y - Platform.Size.Height - 30;
+                    GeneratePlatforms(ArkanoidControl.seed);
+                    ArkanoidControl.ThrowBall();
                 }
             }
         }
@@ -437,25 +445,20 @@ namespace Calendari
             panel2.Controls.Clear();
             panel2.Controls.Add(TheBall);
             panel2.Controls.Add(Platform);
-            ArkanoidControl.Score = 0;
+            Random rand = new Random();
             Color[] colors = Planet.GetColor(seed);
             ArkanoidControl.Platforms.Clear();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    Label lbl = new Label();
+                    Button lbl = new Button();
                     lbl.AutoSize = false;
                     lbl.Size = new Size(150, 30);
-                    lbl.Location = new Point(j * Width/10, i * Height/15);                   
-                    if (i * j % 2 == 0)
-                    {
-                        lbl.BackColor = colors[0];
-                    } 
-                    else
-                    {
-                        lbl.BackColor = colors[1];
-                    }
+                    lbl.Enabled = false;
+                    lbl.Location = new Point(j * Width/10, i * Height/15);
+                    int val = rand.Next(2);
+                    lbl.BackColor = colors[val];
                     ArkanoidControl.Platforms.Add(lbl);
                     panel2.Controls.Add(lbl);
                 }
