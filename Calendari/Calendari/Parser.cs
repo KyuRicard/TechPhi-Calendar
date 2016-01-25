@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PhidgetInteraction;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -95,6 +96,22 @@ namespace Calendari
         {
             Score = score;
             WriteScore("scores.xml");
+        }
+
+        public static void SensorRead()
+        {
+            var reader = new XmlSerializer(typeof(List<Sensor>));
+            var file = new StreamReader("Sensors.xml");
+            Input.StartInput((List <Sensor>)reader.Deserialize(file));
+            file.Close();
+        }
+
+        public static void SensorWrite()
+        {
+            var writer = new XmlSerializer(typeof(List<Sensor>));
+            var file = new StreamWriter("Sensors.xml");
+            writer.Serialize(file, Input.GetSensors());
+            file.Close();
         }
     }
 }

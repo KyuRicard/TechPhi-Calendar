@@ -19,6 +19,18 @@ namespace Calendari
             phi.StartPhidget();
         }
 
+        public static void StartInput(List<Sensor> sensors)
+        {
+            phi = new InterPhi();
+
+            foreach (Sensor s in sensors)
+            {
+                phi.AddSensor(s);
+            }
+
+            phi.StartPhidget();
+        }
+
         public static bool GetInput(string id)
         {
             #if DEBUG

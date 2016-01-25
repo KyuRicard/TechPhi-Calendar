@@ -70,5 +70,11 @@ namespace Schedule_Manager
         {
             Parser.WriteXML("test.xml");
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Parser.RemoveClase(listBox1.SelectedIndex);
+            fill();
+        }
     }
 }

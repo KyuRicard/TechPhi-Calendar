@@ -42,5 +42,16 @@ namespace Calendari
         {
             classes.Add(c);
         }
+
+        public static void RemoveClase(Clase c)
+        {
+            classes.Remove(c);
+        }
+
+        public static void RemoveClase(int index)
+        {
+            if (index >= 0 && index < classes.Count)
+                RemoveClase(classes[index]);
+        }
     }
 }

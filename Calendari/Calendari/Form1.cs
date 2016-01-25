@@ -29,7 +29,7 @@ namespace Calendari
 
             GetSetmanaActual();
 
-            Input.StartInput();
+            Parser.SensorRead();
             timer2.Start();
             timer1.Start();
             UpdateTick.Start();

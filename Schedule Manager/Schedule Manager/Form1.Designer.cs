@@ -48,6 +48,7 @@
             this.Day = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.Hour = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Torn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumberOfTurns)).BeginInit();
             this.SuspendLayout();
@@ -251,11 +252,22 @@
             this.Hour.TabIndex = 20;
             this.Hour.Text = "Hora";
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(422, 212);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(238, 23);
+            this.button2.TabIndex = 21;
+            this.button2.Text = "Eliminar Seleccionada";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 250);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.Hour);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.Day);
@@ -309,6 +321,7 @@
         private System.Windows.Forms.Label Day;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label Hour;
+        private System.Windows.Forms.Button button2;
     }
 }
 
